@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@drawable/border_thickness"
+    android:layout_height="303dp">
+
+    <TextView
+        android:id="@+id/textView_student_project_name"
+        android:layout_width="394dp"
+        android:layout_height="27dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/rounded_edit_text"
+        android:gravity="center"
+        android:text="Project Name"
+        app:fontFamily="sans-serif-black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.47"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_student_status"
+        android:layout_width="205dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="68dp"
+        android:background="@drawable/rounded_edit_text"
+        android:gravity="center"
+        android:text="Status"
+
+        app:fontFamily="sans-serif"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.956"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_click_source_code"
+        android:layout_width="140dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="68dp"
+        android:background="@drawable/rounded_edit_text"
+        android:text="View Source Code"
+        app:fontFamily="sans-serif"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.031"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_hod_name"
+        android:layout_width="340dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="132dp"
+        android:text=""
+        android:gravity="center"
+        android:background="@drawable/rounded_edit_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.535"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_incharge_name"
+        android:layout_width="340dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="180dp"
+        android:text=""
+        android:gravity="center"
+        android:background="@drawable/rounded_edit_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.535"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_guide_name"
+        android:layout_width="340dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="232dp"
+        android:text=""
+        android:gravity="center"
+        android:background="@drawable/rounded_edit_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.52"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UserCreationActivity">
+
+    <EditText
+        android:id="@+id/editTextPersonName"
+        android:layout_width="386dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="76dp"
+        android:background="@drawable/rounded_edit_text"
+        android:paddingLeft="15dp"
+        android:ems="10"
+        android:hint="Full Name"
+        android:inputType="textPersonName"
+        android:textColor="#A56E44"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextEmailAddress"
+        android:layout_width="386dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="37dp"
+        android:ems="10"
+        android:background="@drawable/rounded_edit_text"
+        android:paddingLeft="15dp"
+        android:hint="Email Id"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextPersonName" />
+
+    <EditText
+        android:id="@+id/editTextTextPassword"
+        android:layout_width="386dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="37dp"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/rounded_edit_text"
+        android:paddingLeft="15dp"        app:layout_constraintTop_toBottomOf="@+id/editTextEmailAddress" />
+
+    <EditText
+        android:id="@+id/editTextDepartment"
+        android:layout_width="386dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="37dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Department"
+        android:background="@drawable/rounded_edit_text"
+        android:paddingLeft="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="382dp"
+        android:layout_height="165dp"
+        android:layout_marginTop="37dp"
+        android:background="@drawable/rounded_edit_text"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextDepartment">
+
+        <RadioButton
+            android:id="@+id/radioButton_HOD"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="HEAD OF DEPARTMENT" />
+
+        <RadioButton
+            android:id="@+id/radioButton_INCHARGE"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="PROJECT IN CHARGE" />
+
+        <RadioButton
+            android:id="@+id/radioButton_GUIDE"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="INTERNAL GUIDE" />
+
+        <RadioButton
+            android:id="@+id/radioButton_STUDENT"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="STUDENT" />
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/button_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/rounded_edit_text"
+        android:text="REGISTER"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
