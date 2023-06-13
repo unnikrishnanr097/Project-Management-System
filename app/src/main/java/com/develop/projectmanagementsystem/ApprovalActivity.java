@@ -28,6 +28,7 @@ public class ApprovalActivity extends AppCompatActivity {
     AdapterView adapterView;
     ArrayList<Project> projectArrayList;
     ImageView account;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +38,7 @@ public class ApprovalActivity extends AppCompatActivity {
 //        Log.i(TAG,user.getEmail());
         Toast.makeText(getApplicationContext(), "Data received: " + user.toString(), Toast.LENGTH_SHORT).show();
         projectArrayList = new ArrayList<>();
-        account=findViewById(R.id.imageView);
+        account = findViewById(R.id.imageView);
         recyclerView = findViewById(R.id.recyclrView1);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("projects").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -48,8 +49,8 @@ public class ApprovalActivity extends AppCompatActivity {
                     for (DocumentSnapshot d : list) {
                         Project c = d.toObject(Project.class);
                         assert c != null;
-                        String s2=c.getAssigned();
-                        String s1=user.getEmail();
+                        String s2 = c.getAssigned();
+                        String s1 = user.getEmail();
                         if (s1.equals(s2)) {
                             String s = d.getId();
                             String[] arr = s.split("-");
@@ -76,8 +77,8 @@ public class ApprovalActivity extends AppCompatActivity {
         account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i=new Intent(getApplicationContext(),ProfileActivity.class);
-                i.putExtra("user",user);
+                Intent i = new Intent(getApplicationContext(), ProfileActivity.class);
+                i.putExtra("user", user);
                 startActivity(i);
 
             }

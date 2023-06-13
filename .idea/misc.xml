@@ -13,7 +13,9 @@
         <entry key="app/src/main/res/drawable/popup_window.xml" value="0.2315" />
         <entry key="app/src/main/res/drawable/rounded_edit_text.xml" value="0.2315" />
         <entry key="app/src/main/res/drawable/rounded_edit_text1.xml" value="0.298" />
+        <entry key="app/src/main/res/drawable/rounded_edit_text3.xml" value="0.205" />
         <entry key="app/src/main/res/drawable/rounded_white.xml" value="0.298" />
+        <entry key="app/src/main/res/layout/activity_admin.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_approval.xml" value="0.35625" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_profile.xml" value="0.33152173913043476" />
@@ -24,6 +26,7 @@
         <entry key="app/src/main/res/layout/activity_user_creation.xml" value="0.25" />
         <entry key="app/src/main/res/layout/border_layout.xml" value="0.35520833333333335" />
         <entry key="app/src/main/res/layout/layout_recycler.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/layout_recycler_admin.xml" value="0.348731884057971" />
         <entry key="app/src/main/res/layout/layout_student.xml" value="0.33" />
         <entry key="app/src/main/res/layout/popup_window.xml" value="0.33" />
         <entry key="app/src/main/res/layout/popup_window1.xml" value="0.33152173913043476" />

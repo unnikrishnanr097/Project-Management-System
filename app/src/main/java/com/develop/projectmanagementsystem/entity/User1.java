@@ -1,12 +1,13 @@
 package com.develop.projectmanagementsystem.entity;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
-public class User implements Serializable {
+public class User1 {
     private String name;
     private String email;
     private String department;
-    private int role;
+    private String role;
     private int status;
 
     public int getStatus() {
@@ -17,13 +18,8 @@ public class User implements Serializable {
         this.status = status;
     }
 
-    public User(String name, String email, String department, int role, int status) {
-        this.name = name;
-        this.email = email;
-        this.department = department;
-        this.role = role;
-    }
-    public User() {
+
+    public User1() {
 
     }
 
@@ -51,22 +47,23 @@ public class User implements Serializable {
         this.department = department;
     }
 
-    public int getRole() {
+    public String getRole() {
         return role;
     }
 
-    public void setRole(int role) {
+    public void setRole(String role) {
         this.role = role;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", department='" + department + '\'' +
-                ", role=" + role +
-                ", status=" + status +
-                '}';
-    }
+    public static Comparator<User1> StatusComparator = new Comparator<User1>() {
+
+        public int compare(User1 s1, User1 s2) {
+            int status1
+                    = s1.getStatus();
+            int status2
+                    = s2.getStatus();
+
+            return status1- status2;
+        }
+    };
 }

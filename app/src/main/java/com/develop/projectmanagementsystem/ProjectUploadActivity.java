@@ -103,16 +103,13 @@ public class ProjectUploadActivity extends AppCompatActivity {
 
         save_btn.setOnClickListener(view -> {
             if (Objects.equals(user.getDepartment(), "CS")) {
-                // Create a new user_data with a first and last name
                 Map<String, Object> user_data = new HashMap<>();
                 user_data.put("projectName", projectName.getText().toString());
                 user_data.put("sourceCodeLink", sourceCode.getText().toString());
                 db.collection("projects").document();
 
-
 //                CollectionReference usersCollectionRef = (CollectionReference) db.collectionGroup("users");
                 Query query = FirebaseFirestore.getInstance().collectionGroup("users").whereEqualTo("role", "HEAD OF DEPARTMENT").whereEqualTo("department", this.user.getDepartment());
-
                 query.get()
                         .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                             @Override
