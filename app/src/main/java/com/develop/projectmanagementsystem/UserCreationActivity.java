@@ -43,7 +43,7 @@ public class UserCreationActivity extends AppCompatActivity {
         password_edt = findViewById(R.id.editTextTextPassword);
         department_edt = findViewById(R.id.editTextDepartment);
         hod_btn = findViewById(R.id.radioButton_HOD);
-        inCharge_btn = findViewById(R.id.radioButton_INCHARGE);
+//        inCharge_btn = findViewById(R.id.radioButton_INCHARGE);
         guide_btn = findViewById(R.id.radioButton_GUIDE);
         student_btn = findViewById(R.id.radioButton_STUDENT);
         radioGroup = findViewById(R.id.radioGroup);
@@ -58,8 +58,7 @@ public class UserCreationActivity extends AppCompatActivity {
             int selectedId = radioGroup.getCheckedRadioButtonId();
             selected_btn = (RadioButton) findViewById(selectedId);
             String role = selected_btn.getText().toString();
-
-
+            
             Map<String, Object> user = new HashMap<>();
             user.put("name", name);
             user.put("email", email);
@@ -73,7 +72,6 @@ public class UserCreationActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
                         EmailSender.sendEmail(email, "Registration Successfully Completed!!!", "Hi " + name + ", you have registered successfully. Please login through application. Password: " + password);
                         Toast.makeText(getApplicationContext(), "Email Sent...", Toast.LENGTH_SHORT).show();
-
                     }).addOnFailureListener(e -> {
                         Log.w(TAG, "Error adding document", e);
                         Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show();

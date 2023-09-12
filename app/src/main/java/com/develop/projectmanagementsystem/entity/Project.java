@@ -7,6 +7,52 @@ public class Project {
     private String sourceCodeLink;
     private String email;
     private String status;
+    private String headOfDepartment;
+    private float hodRating;
+    private float guideRating;
+    private String hodReview;
+    private String guideReview;
+
+
+    public String getHodReview() {
+        return hodReview;
+    }
+
+    public void setHodReview(String hodReview) {
+        this.hodReview = hodReview;
+    }
+
+    public String getGuideReview() {
+        return guideReview;
+    }
+
+    public void setGuideReview(String guideReview) {
+        this.guideReview = guideReview;
+    }
+
+    public float getGuideRating() {
+        return guideRating;
+    }
+
+    public void setGuideRating(float guideRating) {
+        this.guideRating = guideRating;
+    }
+
+    public float getHodRating() {
+        return hodRating;
+    }
+
+    public void setHodRating(float hodRating) {
+        this.hodRating = hodRating;
+    }
+
+    public String getHeadOfDepartment() {
+        return headOfDepartment;
+    }
+
+    public void setHeadOfDepartment(String headOfDepartment) {
+        this.headOfDepartment = headOfDepartment;
+    }
 
     public String getStatus() {
         return status;

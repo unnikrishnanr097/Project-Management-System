@@ -2,15 +2,18 @@ package com.develop.projectmanagementsystem.adapter;
 
 import static android.content.ContentValues.TAG;
 
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,7 +30,16 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.ktx.Firebase;
+//import com.itextpdf.text.DocumentException;
+//import com.itextpdf.text.Paragraph;
+//import com.itextpdf.text.pdf.PdfWriter;
+//
+//import org.apache.pdfbox.pdmodel.PDDocument;
+//import org.apache.pdfbox.pdmodel.PDPage;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 public class StudentAdapterView extends RecyclerView.Adapter<StudentAdapterView.MyViewholder> {
@@ -61,7 +73,6 @@ public class StudentAdapterView extends RecyclerView.Adapter<StudentAdapterView.
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 holder.hod_name.setText(String.valueOf(documentSnapshot.get("headOfDepartment")));
-                holder.in_charge_name.setText(String.valueOf(documentSnapshot.get("projectInCharge")));
                 holder.guide_name.setText(String.valueOf(documentSnapshot.get("internalGuide")));
                 holder.source_code_link.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -82,6 +93,17 @@ public class StudentAdapterView extends RecyclerView.Adapter<StudentAdapterView.
         });
         holder.project_name.setText(project.getProjectName());
         holder.status.setText(project.getStatus());
+        holder.hodRating.setText(String.valueOf(project.getHodRating() ));
+        holder.guideRating.setText(String.valueOf(project.getGuideRating()));
+        holder.hodReview.setText(project.getHodReview());
+        holder.guideReview.setText(project.getGuideReview());
+
+        holder.hodReview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
     @Override
@@ -90,7 +112,7 @@ public class StudentAdapterView extends RecyclerView.Adapter<StudentAdapterView.
     }
 
     public class MyViewholder extends RecyclerView.ViewHolder {
-        TextView project_name, status, hod_name, in_charge_name, guide_name;
+        TextView project_name, status, hod_name, guide_name,hodRating,guideRating,hodReview,guideReview;
         Button source_code_link;
 
         public MyViewholder(@NonNull View itemView) {
@@ -98,9 +120,13 @@ public class StudentAdapterView extends RecyclerView.Adapter<StudentAdapterView.
             project_name = itemView.findViewById(R.id.textView_student_project_name);
             status = itemView.findViewById(R.id.textView_student_status);
             hod_name = itemView.findViewById(R.id.textView_hod_name);
-            in_charge_name = itemView.findViewById(R.id.textView_incharge_name);
             guide_name = itemView.findViewById(R.id.textView_guide_name);
             source_code_link = itemView.findViewById(R.id.button_click_source_code);
+            hodRating=itemView.findViewById(R.id.textView_hod_rating);
+            guideRating=itemView.findViewById(R.id.textView_guide_rating);
+            hodReview=itemView.findViewById(R.id.textView_hod_review);
+            guideReview=itemView.findViewById(R.id.textView_guide_review);
+
         }
     }
 }

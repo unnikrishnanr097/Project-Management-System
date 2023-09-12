@@ -14,7 +14,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +40,7 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.mail.MessagingException;
 
@@ -72,63 +75,120 @@ public class AdapterView extends RecyclerView.Adapter<AdapterView.MyViewholder> 
         holder.emailView.setText(project.getEmail());
         holder.projectNameView.setText(project.getProjectName());
         Map<String, Object> user_data = new HashMap<>();
-
-
         holder.approval_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Map<String, Object> user_data = new HashMap<>();
                 String role = "";
                 String status = "";
-                if (user.getRole() == 1) {
-                    role = "PROJECT IN CHARGE";
+
+                if (user.getRole() == 1 && Objects.equals(project.getStatus(), "GUIDE APPROVED")) {
+                    role = "HEAD OF DEPARTMENT";
+                    status = "APPROVED";
                 } else if (user.getRole() == 2) {
                     role = "INTERNAL GUIDE";
-                } else if (user.getRole() == 3) {
+                    status = "GUIDE APPROVED";
+                } else if (user.getRole() == 1 && !Objects.equals(project.getStatus(), "GUIDE APPROVED")) {
                     role = "INTERNAL GUIDE";
-                    status = "APPROVED";
                 }
-                Query query = FirebaseFirestore.getInstance().collectionGroup("users").whereEqualTo("role", role).whereEqualTo("department", user.getDepartment());
-                query.get()
-                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                            @Override
-                            public void onSuccess(QuerySnapshot querySnapshot) {
-                                long count = querySnapshot.size();
-                                String userRole = "";
-                                if (user.getRole() == 1) {
-                                    userRole = "headOfDepartment";
-                                } else if (user.getRole() == 2) {
-                                    userRole = "projectInCharge";
-                                } else if (user.getRole() == 3) {
-                                    userRole = "internalGuide";
-                                }
-                                System.out.println("Number of documents with role HOD: " + user.getDepartment());
-                                for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
-                                    System.out.println("Document ID: " + documentSnapshot.getId());
-                                    user_data.put("assigned", documentSnapshot.getId());
-                                    user_data.put(userRole, user.getEmail());
-                                    System.out.println("Data: " + documentSnapshot.get("email"));
-                                    db.collection("projects").document(project.getEmail() + "-" + project.getProjectName())
-                                            .update(user_data).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                @Override
-                                                public void onSuccess(Void unused) {
-                                                    Toast.makeText(context, "Project Updated: ", Toast.LENGTH_SHORT).show();
-                                                }
-                                            }).addOnFailureListener(new OnFailureListener() {
-                                                @Override
-                                                public void onFailure(@NonNull Exception e) {
+                float rating = holder.ratingBar.getRating();
+                String review = holder.multiText.getText().toString();
+                if (user.getRole() == 2) {
+                    user_data.put("guideRating", rating);
+                    user_data.put("guideReview", review);
+                } else if (user.getRole() == 1) {
+                    user_data.put("hodRating", rating);
+                    user_data.put("hodReview", review);
+                }
 
-                                                }
-                                            });
+                if (user.getRole()==1 && !Objects.equals(project.getStatus(), "GUIDE APPROVED")) {
+                    Query query = FirebaseFirestore.getInstance().collectionGroup("users").whereEqualTo("role", role).whereEqualTo("department", user.getDepartment());
+                    query.get()
+                            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                @Override
+                                public void onSuccess(QuerySnapshot querySnapshot) {
+                                    long count = querySnapshot.size();
+                                    String userRole = "";
+                                    if (user.getRole() == 1) {
+                                        userRole = "headOfDepartment";
+                                    } else if (user.getRole() == 2) {
+                                        userRole = "internalGuide";
+                                    }
+                                    System.out.println("Number of documents with role HOD: " + user.toString());
+                                    for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
+                                        System.out.println("Document ID: " + documentSnapshot.getId());
+                                        user_data.put("assigned", documentSnapshot.getId());
+                                        user_data.put(userRole, user.getEmail());
+                                        user_data.put("status","HOD APPROVED");
+
+                                        System.out.println("Data: " + documentSnapshot.get("email"));
+                                        db.collection("projects").document(project.getEmail() + "-" + project.getProjectName())
+                                                .update(user_data).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void unused) {
+                                                        Toast.makeText(context, "Project Updated: ", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }).addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+
+                                                    }
+                                                });
+                                    }
                                 }
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.e(TAG, "Error getting documents", e);
-                            }
-                        });
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.e(TAG, "Error getting documents", e);
+                                }
+                            });
+                }
+                if (user.getRole() == 2 && Objects.equals(project.getStatus(), "HOD APPROVED")) {
+                    Query query = FirebaseFirestore.getInstance().collectionGroup("users").whereEqualTo("role", role).whereEqualTo("department", user.getDepartment());
+                    query.get()
+                            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                @Override
+                                public void onSuccess(QuerySnapshot querySnapshot) {
+                                    long count = querySnapshot.size();
+                                    String userRole = "";
+                                    if (user.getRole() == 1) {
+                                        userRole = "headOfDepartment";
+                                    } else if (user.getRole() == 2) {
+                                        userRole = "internalGuide";
+                                    }
+                                    System.out.println("Number of documents with role HOD: " + user.toString());
+                                    System.out.println("Number of documents with role HOD: " + querySnapshot.size());
+                                    for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
+                                        System.out.println("Document ID: " + documentSnapshot.getId());
+                                        user_data.put("assigned", project.getHeadOfDepartment());
+                                        user_data.put(userRole, user.getEmail());
+                                        user_data.put("status", "GUIDE APPROVED");
+
+                                        System.out.println("Data: " + documentSnapshot.get("email"));
+                                        db.collection("projects").document(project.getEmail() + "-" + project.getProjectName())
+                                                .update(user_data).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void unused) {
+
+                                                        Toast.makeText(context, "Project Updated: ", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }).addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+
+                                                    }
+                                                });
+                                    }
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.e(TAG, "Error getting documents", e);
+                                }
+                            });
+                }
 
                 if (status.equals("APPROVED")) {
                     Map<String, Object> statusMap = new HashMap<>();
@@ -225,6 +285,9 @@ public class AdapterView extends RecyclerView.Adapter<AdapterView.MyViewholder> 
     public class MyViewholder extends RecyclerView.ViewHolder {
         Button synopsis_btn, report_btn, abstract_btn, approval_btn, cancel_btn;
         TextView emailView, projectNameView;
+        RatingBar ratingBar;
+        EditText multiText;
+
 
         public MyViewholder(@NonNull View itemView) {
             super(itemView);
@@ -235,6 +298,9 @@ public class AdapterView extends RecyclerView.Adapter<AdapterView.MyViewholder> 
             projectNameView = itemView.findViewById(R.id.textView_project_name);
             approval_btn = itemView.findViewById(R.id.imageButton_approval);
             cancel_btn = itemView.findViewById(R.id.imageButton_cancel);
+            ratingBar = itemView.findViewById(R.id.ratingBar);
+            multiText = itemView.findViewById(R.id.editTextTextMultiLine_Review);
+
         }
     }
 }

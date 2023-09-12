@@ -55,9 +55,11 @@ public class LoginActivity extends AppCompatActivity {
 
             if (email.isBlank()) {
                 Toast.makeText(getApplicationContext(), "Please Enter Email", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent());
             }
             if (password.isBlank()) {
                 Toast.makeText(getApplicationContext(), "Please Enter Password", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent());
             }
             if(email.equals("admin@gmail.com") && password.equals("admin"))
             {
@@ -79,14 +81,14 @@ public class LoginActivity extends AppCompatActivity {
                         i.putExtra("user", user1);
                         startActivity(i);
                     }
-                    if (Objects.equals(role, "PROJECT IN CHARGE")) {
-                        User user1 = new User(name, email1, department, 2);
-                        Intent i = new Intent(getApplicationContext(), ApprovalActivity.class);
-                        i.putExtra("user", user1);
-                        startActivity(i);
-                    }
+//                    if (Objects.equals(role, "PROJECT IN CHARGE")) {
+//                        User user1 = new User(name, email1, department, 2);
+//                        Intent i = new Intent(getApplicationContext(), ApprovalActivity.class);
+//                        i.putExtra("user", user1);
+//                        startActivity(i);
+//                    }
                     if (Objects.equals(role, "INTERNAL GUIDE")) {
-                        User user1 = new User(name, email1, department, 3);
+                        User user1 = new User(name, email1, department, 2);
                         Intent i = new Intent(getApplicationContext(), ApprovalActivity.class);
                         i.putExtra("user", user1);
                         startActivity(i);
@@ -104,17 +106,14 @@ public class LoginActivity extends AppCompatActivity {
                             Intent i = new Intent(getApplicationContext(), ProjectUploadActivity.class);
                             i.putExtra("user", user1);
                             startActivity(i);
-
                         });
                         popupView.findViewById(R.id.popupButton_project_list).setOnClickListener(view12 -> {
                             Intent i = new Intent(getApplicationContext(), StudentActivity.class);
                             i.putExtra("user", user1);
                             startActivity(i);
-
                         });
 
                         popupView.findViewById(R.id.button_profile).setOnClickListener(view1 -> {
-
                             Intent i = new Intent(getApplicationContext(), ProfileActivity.class);
                             i.putExtra("user", user1);
                             startActivity(i);
