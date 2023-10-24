@@ -21,17 +21,15 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
-public  class EmailSender  {
+public class EmailSender {
 
     private static final String SMTP_SERVER = "smtp.gmail.com";
-    private static final String USERNAME = "unnikrishnanr097@gmail.com";
-    private static final String PASSWORD = "hjbrxnbhclxlcsmv";
+    private static final String USERNAME = "pmsmanagerservice@gmail.com";
+    private static final String PASSWORD = "ilezjgueprweyedq";
     private static final int PORT = 587;
 
 
     public static void sendEmail(String recipient, String subject, String content) {
-        final String username = "unnikrishnanr097@gmail.com";
-        final String password = "jfyzbqogomksausa";
 
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
@@ -42,36 +40,22 @@ public  class EmailSender  {
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(username, password);
+                        return new PasswordAuthentication(USERNAME, PASSWORD);
                     }
                 });
         try {
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("unnikrishnanr097@gmail.com"));
+            message.setFrom(new InternetAddress(USERNAME));
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(recipient));
             message.setSubject(subject);
             message.setText(content);
 
-//            MimeBodyPart messageBodyPart = new MimeBodyPart();
-//
-//            Multipart multipart = new MimeMultipart();
-//
-//            messageBodyPart = new MimeBodyPart();
-//            String file = "path of file to be attached";
-//            String fileName = "attachmentName";
-//            DataSource source = new FileDataSource(file);
-//            messageBodyPart.setDataHandler(new DataHandler(source));
-//            messageBodyPart.setFileName(fileName);
-//            multipart.addBodyPart(messageBodyPart);
-//            message.setContent(multipart);
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
                         Transport.send(message);
-                        System.out.println("Done Thread");
-
                     } catch (MessagingException e) {
                         e.printStackTrace();
                     }

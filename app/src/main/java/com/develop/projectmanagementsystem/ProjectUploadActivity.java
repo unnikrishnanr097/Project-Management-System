@@ -89,20 +89,25 @@ public class ProjectUploadActivity extends AppCompatActivity {
             startActivityForResult(intent, FILE_PICKER_REQUEST_CODE_ABSTRACT);
         });
 
-        next_btn.setOnClickListener(view -> {
-            String project_name = projectName.getText().toString();
-            String source_code = sourceCode.getText().toString();
-            Log.i(TAG, project_name);
-            storageReference = storageRef.child("projects/").child(user.getEmail()).child(project_name);
-            Toast.makeText(getApplicationContext(), "FIRST", Toast.LENGTH_SHORT).show();
-            cardView_abstract.setVisibility(View.VISIBLE);
-            cardView_report.setVisibility(View.VISIBLE);
-            cardView_synopsis.setVisibility(View.VISIBLE);
-            save_btn.setVisibility(View.VISIBLE);
-        });
+        if(projectName!=null || sourceCode!=null) {
+
+            next_btn.setOnClickListener(view -> {
+                String project_name = projectName.getText().toString();
+                String source_code = sourceCode.getText().toString();
+                Log.i(TAG, project_name);
+                storageReference = storageRef.child("projects/").child(user.getEmail()).child(project_name);
+                cardView_abstract.setVisibility(View.VISIBLE);
+                cardView_report.setVisibility(View.VISIBLE);
+                cardView_synopsis.setVisibility(View.VISIBLE);
+                save_btn.setVisibility(View.VISIBLE);
+            });
+        }
+        else {
+            Toast.makeText(getApplicationContext(), "Please enter valid data", Toast.LENGTH_SHORT).show();
+        }
 
         save_btn.setOnClickListener(view -> {
-            if (Objects.equals(user.getDepartment(), "CS")) {
+//            if (Objects.equals(user.getDepartment(), "CS")) {
                 // Create a new user_data with a first and last name
                 Map<String, Object> user_data = new HashMap<>();
                 user_data.put("projectName", projectName.getText().toString());
@@ -133,6 +138,7 @@ public class ProjectUploadActivity extends AppCompatActivity {
                                                     Intent i = new Intent(getApplicationContext(), StudentActivity.class);
                                                     i.putExtra("user", user);
                                                     startActivity(i);
+                                                    finish();
                                                 }
                                             }).addOnFailureListener(new OnFailureListener() {
                                                 @Override
@@ -149,7 +155,7 @@ public class ProjectUploadActivity extends AppCompatActivity {
                                 Log.e(TAG, "Error getting documents", e);
                             }
                         });
-            }
+//            }
         });
     }
 

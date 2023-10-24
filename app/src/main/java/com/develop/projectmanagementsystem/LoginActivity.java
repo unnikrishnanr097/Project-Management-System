@@ -47,87 +47,90 @@ public class LoginActivity extends AppCompatActivity {
 
         final User[] user = new User[1];
         login_btn.setOnClickListener(view -> {
-//            EmailSender.sendEmail("unnikrishnanr096@gmail.com","Hello, this is a test mail", "Test Mail");
-
-
             String email = email_txt.getText().toString();
             String password = password_text.getText().toString();
-
+            int verify=0;
             if (email.isBlank()) {
                 Toast.makeText(getApplicationContext(), "Please Enter Email", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent());
+                verify=1;
             }
-            if (password.isBlank()) {
+            else if (!email.endsWith("@gmail.com")) {
+                Toast.makeText(getApplicationContext(), "Please Enter Valid Email", Toast.LENGTH_SHORT).show();
+                verify=1;
+            }
+            else if (password.isBlank()) {
                 Toast.makeText(getApplicationContext(), "Please Enter Password", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent());
+                verify=1;
             }
             if(email.equals("admin@gmail.com") && password.equals("admin"))
             {
                 startActivity(new Intent(getApplicationContext(),UserCreationActivity.class));
             }
 //            DocumentReference docRef = db.collection("users").document(email);
-            db.collection("users").document(email).get().addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), "Login OK", Toast.LENGTH_SHORT).show();
+            if(verify==0) {
+                db.collection("users").document(email).get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(getApplicationContext(), "Login OK", Toast.LENGTH_SHORT).show();
 
-                    DocumentSnapshot document = task.getResult();
-                    String role = document.getString("role");
-                    String name = document.getString("name");
-                    String email1 = document.getString("email");
-                    String department = document.getString("department");
-                    if (Objects.equals(role, "HEAD OF DEPARTMENT")) {
-                        User user1 = new User(name, email1, department, 1);
-                        Intent i = new Intent(getApplicationContext(), ApprovalActivity.class);
-                        i.putExtra("user", user1);
-                        startActivity(i);
-                    }
+                        DocumentSnapshot document = task.getResult();
+                        String role = document.getString("role");
+                        String name = document.getString("name");
+                        String email1 = document.getString("email");
+                        String department = document.getString("department");
+                        if (Objects.equals(role, "HEAD OF DEPARTMENT")) {
+                            User user1 = new User(name, email1, department, 1);
+                            Intent i = new Intent(getApplicationContext(), ApprovalActivity.class);
+                            i.putExtra("user", user1);
+                            startActivity(i);
+                        }
 //                    if (Objects.equals(role, "PROJECT IN CHARGE")) {
 //                        User user1 = new User(name, email1, department, 2);
 //                        Intent i = new Intent(getApplicationContext(), ApprovalActivity.class);
 //                        i.putExtra("user", user1);
 //                        startActivity(i);
 //                    }
-                    if (Objects.equals(role, "INTERNAL GUIDE")) {
-                        User user1 = new User(name, email1, department, 2);
-                        Intent i = new Intent(getApplicationContext(), ApprovalActivity.class);
-                        i.putExtra("user", user1);
-                        startActivity(i);
-                    }
-                    if (Objects.equals(role, "STUDENT")) {
-
-                        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                        View popupView = inflater.inflate(R.layout.popup_window, null);
-                        popupWindow = new PopupWindow(popupView, 1000, 1100);
-                        popupWindow.showAtLocation(getWindow().getDecorView(), Gravity.CENTER, 0, 0);
-                        User user1 = new User(name, email1, department, 4);
-
-                        Button popupButton_creation = popupView.findViewById(R.id.popupButton_project_creation);
-                        popupButton_creation.setOnClickListener(view13 -> {
-                            Intent i = new Intent(getApplicationContext(), ProjectUploadActivity.class);
+                        if (Objects.equals(role, "INTERNAL GUIDE")) {
+                            User user1 = new User(name, email1, department, 2);
+                            Intent i = new Intent(getApplicationContext(), ApprovalActivity.class);
                             i.putExtra("user", user1);
                             startActivity(i);
-                        });
-                        popupView.findViewById(R.id.popupButton_project_list).setOnClickListener(view12 -> {
-                            Intent i = new Intent(getApplicationContext(), StudentActivity.class);
-                            i.putExtra("user", user1);
-                            startActivity(i);
-                        });
+                        }
+                        if (Objects.equals(role, "STUDENT")) {
 
-                        popupView.findViewById(R.id.button_profile).setOnClickListener(view1 -> {
-                            Intent i = new Intent(getApplicationContext(), ProfileActivity.class);
-                            i.putExtra("user", user1);
-                            startActivity(i);
+                            LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                            View popupView = inflater.inflate(R.layout.popup_window, null);
+                            popupWindow = new PopupWindow(popupView, 1000, 1100);
+                            popupWindow.showAtLocation(getWindow().getDecorView(), Gravity.CENTER, 0, 0);
+                            User user1 = new User(name, email1, department, 4);
+
+                            Button popupButton_creation = popupView.findViewById(R.id.popupButton_project_creation);
+                            popupButton_creation.setOnClickListener(view13 -> {
+                                Intent i = new Intent(getApplicationContext(), ProjectUploadActivity.class);
+                                i.putExtra("user", user1);
+                                startActivity(i);
+                            });
+                            popupView.findViewById(R.id.popupButton_project_list).setOnClickListener(view12 -> {
+                                Intent i = new Intent(getApplicationContext(), StudentActivity.class);
+                                i.putExtra("user", user1);
+                                startActivity(i);
+                            });
+
+                            popupView.findViewById(R.id.button_profile).setOnClickListener(view1 -> {
+                                Intent i = new Intent(getApplicationContext(), ProfileActivity.class);
+                                i.putExtra("user", user1);
+                                startActivity(i);
 //                            popupWindow.dismiss();
 
-                        });
+                            });
+
+                        }
+                        Toast.makeText(getApplicationContext(), name + email1 + department, Toast.LENGTH_SHORT).show();
 
                     }
-                    Toast.makeText(getApplicationContext(), name + email1 + department, Toast.LENGTH_SHORT).show();
+                }).addOnFailureListener(e -> {
 
-                }
-            }).addOnFailureListener(e -> {
-
-            });
+                });
+            }
         });
 
     }

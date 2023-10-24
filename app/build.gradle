@@ -5,10 +5,15 @@ plugins {
 
 android {
     compileSdk 33
-
+    packagingOptions {
+        resources {
+            exclude 'META-INF/NOTICE.md'
+            exclude 'META-INF/LICENSE.md'
+        }
+    }
     defaultConfig {
         applicationId "com.develop.projectmanagementsystem"
-        minSdk 27
+        minSdk 29
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -45,9 +50,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.10'
-    implementation 'com.sun.mail:android-mail:1.6.4'
-    implementation 'com.sun.mail:android-activation:1.6.4'
-
-
+    implementation 'com.sun.mail:android-mail:1.6.6'
+    implementation 'com.sun.mail:android-activation:1.6.6'
 
 }

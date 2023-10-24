@@ -62,6 +62,7 @@ public class ProfileActivity extends AppCompatActivity {
         edit_name.setOnClickListener(view -> editText_name.setEnabled(true));
         edit_password.setOnClickListener(view -> editText_password.setEnabled(true));
 
+
         save_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

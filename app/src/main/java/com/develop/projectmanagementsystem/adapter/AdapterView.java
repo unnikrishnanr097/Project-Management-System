@@ -7,6 +7,7 @@ import static androidx.core.app.ActivityCompat.recreate;
 import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
@@ -22,14 +23,17 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.develop.projectmanagementsystem.ApprovalActivity;
 import com.develop.projectmanagementsystem.R;
 import com.develop.projectmanagementsystem.entity.EmailSender;
 import com.develop.projectmanagementsystem.entity.Project;
 import com.develop.projectmanagementsystem.entity.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -39,6 +43,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -127,6 +132,12 @@ public class AdapterView extends RecyclerView.Adapter<AdapterView.MyViewholder> 
                                                     @Override
                                                     public void onSuccess(Void unused) {
                                                         Toast.makeText(context, "Project Updated: ", Toast.LENGTH_SHORT).show();
+                                                        projectArrayList.clear();
+                                                        fetchNewData();
+                                                        notifyItemChanged(holder.getAdapterPosition());
+//                                                        Intent i = new Intent(context, ApprovalActivity.class);
+//                                                        i.putExtra("user", user);
+//                                                        context.startActivity(i);
                                                     }
                                                 }).addOnFailureListener(new OnFailureListener() {
                                                     @Override
@@ -170,8 +181,11 @@ public class AdapterView extends RecyclerView.Adapter<AdapterView.MyViewholder> 
                                                 .update(user_data).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                     @Override
                                                     public void onSuccess(Void unused) {
-
                                                         Toast.makeText(context, "Project Updated: ", Toast.LENGTH_SHORT).show();
+                                                        projectArrayList.clear();
+                                                        fetchNewData();
+                                                        notifyItemChanged(holder.getAdapterPosition());
+
                                                     }
                                                 }).addOnFailureListener(new OnFailureListener() {
                                                     @Override
@@ -272,6 +286,39 @@ public class AdapterView extends RecyclerView.Adapter<AdapterView.MyViewholder> 
                         downloadManager.enqueue(request);
                     }
                 });
+            }
+        });
+
+    }
+
+    private void fetchNewData() {
+        db.collection("projects").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                if (!queryDocumentSnapshots.isEmpty()) {
+                    List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                    for (DocumentSnapshot d : list) {
+                        Project c = d.toObject(Project.class);
+                        assert c != null;
+                        String s2=c.getAssigned();
+                        String s1=user.getEmail();
+                        if (s1.equals(s2)) {
+                            String s = d.getId();
+                            String[] arr = s.split("-");
+                            String email = arr[0];
+                            c.setEmail(email);
+                            projectArrayList.add(c);
+                        }
+                    }
+
+
+                } else {
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
             }
         });
     }
