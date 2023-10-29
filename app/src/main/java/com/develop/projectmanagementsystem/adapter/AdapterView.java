@@ -80,6 +80,22 @@ public class AdapterView extends RecyclerView.Adapter<AdapterView.MyViewholder> 
         holder.emailView.setText(project.getEmail());
         holder.projectNameView.setText(project.getProjectName());
         Map<String, Object> user_data = new HashMap<>();
+        holder.cancel_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                user_data.put("assigned", "Rejected");
+                user_data.put("status","REJECTED");
+                db.collection("projects").document(project.getEmail() + "-" + project.getProjectName()).update(user_data).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+
+                        Toast.makeText(context, "Rejected", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
+            }
+        });
         holder.approval_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
